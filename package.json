@@ -1,6 +1,6 @@
 {
   "name": "waitit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Wait until a condition matched",
   "main": "index.js",
   "scripts": {
