@@ -12,7 +12,9 @@ It shows you how to install the package, and how to use it from your projects.
 npm install waitit
 ```
 
-### Sample
+### Samples
+
+#### Wait for the condition
 
 ```javascript
 
@@ -34,4 +36,26 @@ try {
 catch(error) {
   console.log(error);
 }
+```
+
+#### Cancellation
+
+```javascript
+
+let condition = false;
+
+waitit.start({
+  check: () => {
+    return condition;
+  }
+}).then((wait) => {
+  console.log(wait);
+}).catch(error => {
+  console.log(error);
+});
+// Force it to stop
+setTimeout(() => {
+  waitit.stop();
+}, 1000);
+
 ```

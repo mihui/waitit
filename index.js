@@ -15,7 +15,7 @@ const waitit = {
    * 
    *  - check: check for the given condition
    *  - interval: default: 100 (0.1 second)
-   *  - maxTicks: default 100 (equals to 10 seconds)
+   *  - maxTicks: how many times of check it will be timeout, default 100 (equals to 10 seconds)
    * @returns 
    */
   start: (options) => {

@@ -33,7 +33,7 @@ describe('Test Conditional Waiting', () => {
         check: () => {
           return condition;
         },
-        maxTicks: 5
+        maxTicks: 3
       });
       console.log(wait);
       assert.strictEqual(waitit.STATUS.COMPLETED, wait.code);
@@ -43,5 +43,25 @@ describe('Test Conditional Waiting', () => {
       assert.strictEqual(waitit.STATUS.TIMEOUT, error.code);
     }
   });
+
+  it('Should be cancelled', (done) => {
+    let condition = false;
+    waitit.start({
+      check: () => {
+        return condition;
+      }
+    }).then((wait) => {
+      console.log(wait);
+    }).catch(error => {
+      console.log(error);
+      assert.strictEqual(waitit.STATUS.CANCELLED, error.code);
+      done();
+    });
+    // Force it to stop
+    setTimeout(() => {
+      waitit.stop();
+    }, 1000);
+  });
+
 });
 
