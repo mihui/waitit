@@ -13,22 +13,20 @@ const waitit = {
    * 
    * @param {object} options Options
    * 
-   *  - check: check for the given condition
+   *  - check: method to check the given condition
    *  - interval: default: 100 (0.1 second)
    *  - maxTicks: how many times of check it will be timeout, default 100 (equals to 10 seconds)
+   *  - tick: callback of the ticks
    * @returns 
    */
   start: (options) => {
     let t = 0;
     let ticks = 0;
-    options.debug = options.debug || false;
-    options.title = options.title || 'Wait it';
     options.interval = options.interval || 1000;
     options.maxTicks = options.maxTicks || 10;
     options.check = options.check || (() => { return true });
     options.tick = options.tick || ((tick) => {
-      if(options.debug)
-        console.log(`[${options.title}]: ${tick}`);
+        console.log(`[Wait it]: ${tick}`);
     });
 
     return new Promise((resolve, reject) => {
