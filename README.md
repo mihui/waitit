@@ -1,2 +1,3 @@
-# waitit
-Wait until a condition matched
+# Wait it for JavaScript
+
+Wait until a condition matched.
