@@ -21,11 +21,14 @@ const waitit = {
   start: (options) => {
     let t = 0;
     let ticks = 0;
+    options.debug = options.debug || false;
+    options.title = options.title || 'Wait it';
     options.interval = options.interval || 1000;
     options.maxTicks = options.maxTicks || 10;
     options.check = options.check || (() => { return true });
     options.tick = options.tick || ((tick) => {
-      console.log(tick);
+      if(options.debug)
+        console.log(`[${options.title}]: ${tick}`);
     });
 
     return new Promise((resolve, reject) => {
@@ -35,7 +38,7 @@ const waitit = {
           clearInterval(t);
           reject({ code: waitit.STATUS.CANCELLED });
         }
-        console.log(ticks);
+        options.tick(ticks);
         // Check condition
         if(options.check()) { 
           clearInterval(t);
