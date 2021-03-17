@@ -1,0 +1,25 @@
+{
+  "name": "waitit",
+  "version": "1.0.0",
+  "description": "Wait until a condition matched",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --timeout=10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mihui/waitit.git"
+  },
+  "keywords": [
+    "wait"
+  ],
+  "author": "Michael",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mihui/waitit/issues"
+  },
+  "homepage": "https://github.com/mihui/waitit#readme",
+  "devDependencies": {
+    "mocha": "^8.3.2"
+  }
+}
