@@ -14,34 +14,52 @@ npm install waitit
 
 ### Samples
 
-#### Wait for the condition
+#### Wait for completion, e.g. 5 ticks
 
 ```javascript
-
 let condition = false;
-
-// Simulate when the condition is matched
 setTimeout(() => {
   condition = true;
-}, 3000);
+}, 1);
 
 try {
   const wait = await waitit.start({
     check: () => {
       return condition;
-    }
+    },
+    maxTicks: 5
   });
-  console.log(wait);
+  console.log(wait); // { code: 'COMPLETED' }
 }
 catch(error) {
   console.log(error);
 }
 ```
 
+#### Timeout example
+
+```javascript
+let condition = false;
+setTimeout(() => {
+  condition = true;
+}, 10000);
+try {
+  const wait = await waitit.start({
+    check: () => {
+      return condition;
+    },
+    maxTicks: 3
+  });
+  console.log(wait);
+}
+catch(error) {
+  console.log(error);  // { code: 'TIMEOUT' }
+}
+```
+
 #### Cancellation
 
 ```javascript
-
 let condition = false;
 
 waitit.start({
@@ -51,7 +69,7 @@ waitit.start({
 }).then((wait) => {
   console.log(wait);
 }).catch(error => {
-  console.log(error);
+  console.log(error); // { code: 'CANCELLED' }
 });
 // Force it to stop
 setTimeout(() => {

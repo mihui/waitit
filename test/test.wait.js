@@ -1,6 +1,8 @@
 var assert = require('assert');
 const waitit = require('../index');
 
+waitit.DEBUG = true;
+
 describe('Test Conditional Waiting', () => {
   it('Should be good', async () => {
     let condition = false;
