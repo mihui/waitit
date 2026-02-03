@@ -1,4 +1,25 @@
 /**
+ * A custom error class that extends the built-in Error class.
+ * It adds a code property to the standard Error for more specific error handling.
+ */
+class CustomError extends Error {
+  /** @type {number} Error code */
+  code;
+  /** @type {string} Error name */
+  name;
+  /**
+   * Creates a new CustomError instance.
+   * @param {string|number} code - The error code to associate with this error.
+   * @param {string} [message=''] - The error message. Defaults to an empty string if not provided.
+   */
+  constructor(code, message = '') {
+    super(message);
+    this.name = this.constructor.name;
+    this.code = code;
+  }
+}
+
+/**
  * Wait until it matches a given condition
  */
 const waitit = {
@@ -15,8 +36,8 @@ const waitit = {
    * @param {object} options Options
    * 
    *  - check: method to check the given condition
-   *  - interval: default: 100 (0.1 second)
-   *  - maxTicks: how many times of check it will be timeout, default 100 (equals to 10 seconds)
+   *  - interval: default: 1000 (1 second)
+   *  - maxTicks: how many times to check before timeout, default 10 (equals to 10 seconds with default interval)
    *  - tick: callback of the ticks
    * @returns {Promise<{ code: string }>}
    */
@@ -32,21 +53,30 @@ const waitit = {
 
     return new Promise((resolve, reject) => {
       t = setInterval(() => {
-        // Cancel
-        if(waitit.CANCEL) {
+        // Check for cancellation
+        if (waitit.CANCEL) {
           clearInterval(t);
-          reject({ code: waitit.STATUS.CANCELLED });
+          waitit.CANCEL = false; // Reset flag for future use
+          reject(new CustomError(waitit.STATUS.CANCELLED));
+          return;
         }
+        
+        // Execute tick callback
         options.tick(ticks);
+        
         // Check condition
-        if(options.check()) { 
+        if (options.check()) { 
           clearInterval(t);
           resolve({ code: waitit.STATUS.COMPLETED });
         }
-        else if(ticks++ > options.maxTicks) {
+        // Check for timeout (fixed: use >= instead of > to match maxTicks exactly)
+        else if (ticks >= options.maxTicks) {
           clearInterval(t);
-          reject({ code: waitit.STATUS.TIMEOUT });
+          reject(new CustomError(waitit.STATUS.TIMEOUT));
         }
+        
+        // Increment tick counter after checks
+        ticks++;
       }, options.interval);
     });
   },

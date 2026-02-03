@@ -1,5 +1,5 @@
-var assert = require('assert');
-const waitit = require('../index');
+const assert = require('node:assert');
+const waitit = require('../index.js');
 
 waitit.DEBUG = true;
 

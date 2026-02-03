@@ -1,6 +1,6 @@
 {
   "name": "waitit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Wait until a condition matched",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/mihui/waitit#readme",
   "devDependencies": {
-    "mocha": "^8.3.2"
+    "mocha": "^11.3.0"
   }
 }
